@@ -7,7 +7,7 @@ Things like "Japanese" or "Cinema" or "Sake" should be extracted
 Things such as "dirty bathrooms" should be extracted from reviews.
 
 
-## Kaggle data set
+## [Kaggle data set](https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset)
 
 Download only the following three ndjson files:
 
