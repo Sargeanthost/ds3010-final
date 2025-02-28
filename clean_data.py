@@ -28,6 +28,6 @@ review_df = review_df.filter(pl.col("text").str.len_chars().ge(25))
 tip_df = tip_df.filter(pl.col("text").str.len_chars().ge(5))
 
 # write out . need to check if collecting here is fine.
-business_df.join(review_df, on="business_id").unique().collect(streaming=True).write_parquet(task1_business_review_path)
+business_df.join(review_df, on="business_id").unique().drop(["address", "city", "postal_code", "latitude", "longitude", "attributes", "hours", "user_id", "is_open", "date"]).collect(streaming=True).write_parquet(task1_business_review_path)
 
-business_df.join(tip_df, on="business_id").unique().collect(streaming=True).write_parquet(task1_business_tip_path)
+business_df.join(tip_df, on="business_id").unique().drop(["address", "city", "postal_code", "latitude", "longitude", "attributes", "hours", "user_id", "is_open", "date", "compliment_count"]).collect(streaming=True).write_parquet(task1_business_tip_path)
