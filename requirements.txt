@@ -1,1 +1,6 @@
-polars==1.21.0
+polars
+nltk
+yake
+spacy
+transformers
+torch
