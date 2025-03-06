@@ -3,11 +3,12 @@ from transformers import pipeline
 import spacy
 import polars as pl
 from read_df import get_dfs
+from pathlib import Path
 
 spacy.require_gpu()
 
 
-sentiment_pipeline = pipeline("sentiment-analysis", model="LiYuan/amazon-review-sentiment-analysis")
+sentiment_pipeline = pipeline("sentiment-analysis", model="LiYuan/amazon-review-sentiment-analysis", batch_size=8)
 
 nlp = spacy.load("en_core_web_md")
 
@@ -56,9 +57,18 @@ def apply_absa_extraction(df: pl.DataFrame) -> pl.DataFrame:
 
 
 # MAKE SURE that you do not run this right after running task 1, as the dataframes are modified in task 1 and need to be reinitilized by running the second previous cell
-review_df, tip_df = get_dfs()
-review_df = apply_absa_extraction(review_df.head(1))
-print(review_df[["name", "stars", "absa"]])
+task2_review_path = Path(__file__).parent / "data" / "task2" / "task_2_review.parquet"
+task2_tip_path = Path(__file__).parent / "data" / "task2" / "task_2_tip.parquet"
+
+review_df = pl.read_parquet(task2_review_path)
+tip_df = pl.read_parquet(task2_tip_path)
+
+review_df = apply_absa_extraction(review_df)
+review_df.write_parquet("./data/task2/task2_absa_review.parquet")
+tip_df = apply_absa_extraction(tip_df)
+tip_df.write_parquet("./data/task2/task2_absa_tip.parquet")
+
+
 
 # for chunk, label, score in sentiments:
 #     print(f"Chunk: '{chunk}' -> Sentiment: {label} (Probability: {score:.2f})")
