@@ -39,4 +39,4 @@ print(accuracy_df)
 print(f"Global accuracy : {accuracy_df.with_columns(pl.col('sentence_ratio').mean().alias('global'))['global'][0]}")
 
 # Optionally, save the results to a CSV file
-# accuracy_df.write...
+accuracy_df.write_parquet("./data/task2/task2_eval_absa_human_ratio.parquet")
