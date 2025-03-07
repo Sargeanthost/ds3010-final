@@ -1,3 +1,4 @@
 data/
 .venv/
 *.pptx
+__pycache__/
